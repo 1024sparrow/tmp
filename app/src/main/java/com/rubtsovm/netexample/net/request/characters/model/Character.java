@@ -19,13 +19,40 @@ import java.io.Serializable;
 //events (EventList, optional): A resource list of events in which this character appears.,
 //series (SeriesList, optional): A resource list of series in which this character appears.
 public class Character implements Serializable{
+    @SerializedName("id")
+    private String id;
     @SerializedName("name")
     private String name;
+    @SerializedName("description")
+    private String description;
     @SerializedName("thumbnail")
     private Image thumbnail;
 
+    public Character(String p_id, String p_name, String p_description, Image p_thumbnail) {
+        id = p_id;
+        name = p_name;
+        description = p_description;
+        thumbnail = p_thumbnail;
+    }
+
+    public void setId(String p_id) {
+        id = p_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setDescription(String p_descr) {
+        description = p_descr;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setName(String name) {

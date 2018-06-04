@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import java.util.ArrayList;
+import android.widget.AdapterView;
+import android.view.View;
 
 import com.rubtsovm.netexample.net.MarvelApi;
+import com.rubtsovm.netexample.net.request.characters.model.Character;
 import com.rubtsovm.netexample.net.request.characters.model.CharacterDataWrapper;
 import com.rubtsovm.netexample.utils.CredentialsUtils;
 import com.squareup.picasso.Picasso;
@@ -56,16 +59,17 @@ public class ActivityMain extends AppCompatActivity {
                 public void onNext(CharacterDataWrapper response) {
                     Log.d("MainActivity", "onNext => " + response);
                     try{
-                        //boris here
                         if(response.getData().getResults().size() > 0){
-                            for (int i = 0 ; i < response.getData().getResults().size() ; i++) {
-                                characters.add(new Character(
-                                    response.getData().getResults().get(i).getName(),
-                                    response.getData().getResults().get(i).getThumbnail(),
-                                    response.getData().getResults().get(i).getId(),
-                                    "asdasd"
-                                    //response.getData().getResults().get(i).getDescription()
-                                ));
+                            ArrayList<Character> chs = response.getData().getResults();
+                            for (int i = 0 ; i < chs.size() ; i++) {
+                                Character ch = chs.get(i);
+                                Character candidate = new Character(
+                                    ch.getId(),
+                                    ch.getName(),
+                                    ch.getDescription(),
+                                    ch.getThumbnail()
+                                );
+                                characters.add(candidate);
                             }
                             AdapterList adapterList = new AdapterList(getApplication().getApplicationContext(), characters);
                             lvCharacter.setAdapter(adapterList);
