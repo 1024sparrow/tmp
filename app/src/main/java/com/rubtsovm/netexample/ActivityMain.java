@@ -82,9 +82,9 @@ public class ActivityMain extends AppCompatActivity {
         lvCharacter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent intent = new Intent(getApplicationContext(), CharacterActivity.class);
-                //intent.putExtra("characterId", characters.get(position).getId());
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ActivityDetails.class);
+                intent.putExtra("characterId", characters.get(position).getId());
+                startActivity(intent);
             }
         });
     }

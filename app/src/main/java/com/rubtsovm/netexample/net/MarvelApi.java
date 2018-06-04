@@ -12,6 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -64,6 +65,11 @@ public class MarvelApi {
         return request.getCharacters(ts, apikey, hash);
     }
 
+    public Observable<CharacterDataWrapper> getCharacterById(String id, String ts, String apikey, String hash) {
+        MarvelApiEndPoint request = retrofit.create(MarvelApiEndPoint.class);
+        return request.getCharactersById(id, ts, apikey, hash);
+    }
+
     private static class MarvelApiHolder {
         private static MarvelApi instance;
 
@@ -82,6 +88,8 @@ public class MarvelApi {
     public interface MarvelApiEndPoint{
         @GET(CHARACTERS)
         Observable<CharacterDataWrapper> getCharacters(@Query("ts") String ts, @Query("apikey") String apikey, @Query("hash") String hash );
+        @GET("characters/{id}")
+        Observable<CharacterDataWrapper> getCharactersById(@Path("id") String id, @Query("ts") String ts, @Query("apikey") String apikey, @Query("hash") String hash );
     }
 
 }
