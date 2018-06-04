@@ -19,33 +19,30 @@ import rx.Subscriber;
 
 public class AdapterList extends BaseAdapter{
 
-
-    Context ctx;
+    Context context;
     LayoutInflater layoutInflater;
-    ArrayList<Character> character;
+    ArrayList<Character> characters;
 
-    public AdapterList(Context context, ArrayList<Character> characters) {
-        ctx = context;
-        character = characters;
-        layoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public AdapterList(Context p_context, ArrayList<Character> p_characters) {
+        context = p_context;
+        characters = p_characters;
+        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return character.size();
+        return characters.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return character.get(position);
+        return characters.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,18 +52,16 @@ public class AdapterList extends BaseAdapter{
         if(view == null){
             view = layoutInflater.inflate(R.layout.item, parent, false);
         }
-        Character character = getCharacter(position);
+        Character characters = getCharacter(position);
 
-        String imagePath = character.getThumbnail().getPath()+ "/standard_xlarge" + ".";
-        String imageExtension =  character.getThumbnail().getExtension();
+        String imagePath = characters.getThumbnail().getPath()+ "/standard_xlarge" + ".";
+        String imageExtension =  characters.getThumbnail().getExtension();
         String imageUrl = imagePath + imageExtension;
 
-        ImageView poster = (ImageView)view.findViewById(R.id.posterImage);
+        ImageView imageView = (ImageView)view.findViewById(R.id.thumbnail);
 
-        Picasso.get().load(imageUrl).into(poster);
-        ((TextView)view.findViewById(R.id.nameTv)).setText(character.getName());
-        //((TextView)view.findViewById(R.id.descriptionTv)).setText(character.getDescription());
-
+        Picasso.get().load(imageUrl).into(imageView);
+        ((TextView)view.findViewById(R.id.name)).setText(characters.getName());
         return view;
     }
 
