@@ -58,10 +58,10 @@ public class AdapterList extends BaseAdapter{
         String imageExtension =  characters.getThumbnail().getExtension();
         String imageUrl = imagePath + imageExtension;
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.thumbnail);
+        ImageView imageView = (ImageView)view.findViewById(R.id.item_thumbnail);
 
         Picasso.get().load(imageUrl).into(imageView);
-        ((TextView)view.findViewById(R.id.name)).setText(characters.getName());
+        ((TextView)view.findViewById(R.id.item_name)).setText(characters.getName());
         return view;
     }
 
