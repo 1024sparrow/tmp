@@ -13,7 +13,7 @@ function _getHtml(p){
                 let csc = 1;
                 retVal += '<tr>';
                 for (let iCol = 0 ; iCol < row.length ; iCol++){
-                    //console.log(`(${iCol}) csc=${csc} rsc=${JSON.stringify(rsc)}`);
+                    console.log(`(${iCol}) csc=${csc} rsc=${JSON.stringify(rsc)}`);//
                     if (csc > 1){
                         csc--;
                         if ((rsc[iCol] || 1) > 1){
@@ -25,7 +25,7 @@ function _getHtml(p){
                         rsc[iCol]--;
                         continue;
                     }
-                    //console.log('insert td');
+                    console.log('insert td');//
                     retVal += '<td';
                     let cs = 1;
                     let rs = 1;
@@ -41,7 +41,7 @@ function _getHtml(p){
                     }
                     if (rs > 1){
                         for (let i = 0 ; i < cs ; i++){
-                            rsc[iCol + i] = rs;
+                            rsc[iCol + i] = rs + (i ? 1 : 0);
                         }
                         retVal += ` rowspan=${rs}`;
                     }
@@ -72,10 +72,11 @@ var o2 = {
     table:{
         header:['h1', 'h2', 'h3'],
         content: [
-            [{rowspan:2, text:'e11rowspan'}, {rowspan:2, text:'e12rowspan'}, 'e13'],
-            ['e21', 'e22', 'e23'],
-            ['e31', {colspan:2, text:'e32colspan'}, 'e33'],
-            ['e41', 'e42', 'e43']
+            ['11', {rowspan:2, text:'e11rowspan'}, {rowspan:3, text:'e12rowspan'}, 'e13', 'e14'],
+            ['22', 'e21', 'e22', 'e23', '224'],
+            ['33', 'e31', {colspan:2, text:'e32colspan'}, 'e33', 'e34'],
+            ['44', 'e41', 'e42', 'e43', 'e44'],
+            ['55', 'e51', 'e52', 'e53', 'e54'],
         ]
     }
 };
