@@ -1,8 +1,16 @@
 'use strict';
 
 (function(){
+    var taskname = window.location.href;
+    var startMarker, a, b;
+    startMarker = '/80911_script_for_job/'; // '/user/'
+    a = taskname.indexOf(startMarker) + startMarker.length;
+    b = taskname.indexOf('/index.html', a); // '/front/'
+    taskname = taskname.slice(a, b);
+    console.log('taskname:', taskname);
+    var figPathPrefix = ''; // '/.../user/' + tsakname + '/front/html/index.html';
+
     var list = document.getElementsByTagName('fig');
-    console.log('list:', list);
 
     var epTitle, eimg, edivImg, i, c, e;
     var imagesNormal = [], imagesFs = [];
@@ -15,7 +23,7 @@
 
         edivImg = document.createElement('div');
         eimg = document.createElement('img');
-        eimg.src = 'fig/' + (i + 1) + '.png';
+        eimg.src = figPathPrefix + 'fig/' + (i + 1) + '.png';
         eimg.alt = '';
         eimg.width = 50;
         eimg.height = 50;
@@ -34,7 +42,6 @@
             wOwn = e.naturalWidth;
             hOwn = e.naturalHeight;
             aspectRatio = wOwn / hOwn;
-            console.log('aspect ratio: ', aspectRatio);
 
             if (w > h * aspectRatio){
                 e.height = 0.7 * hOwn;
@@ -52,7 +59,6 @@
             wOwn = e.naturalWidth;
             hOwn = e.naturalHeight;
             aspectRatio = wOwn / hOwn;
-            console.log('aspect ratio: ', aspectRatio);
 
             if (w > h * aspectRatio){
                 tmp = 0.7 * h;
