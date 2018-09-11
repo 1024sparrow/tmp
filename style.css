@@ -1,16 +1,17 @@
-fig[fs]{
-    color: red;
-}
 fig{
-}
-fig > div{
     border-top: 2px solid #444;
     border-bottom: 2px solid #444;
+}
+fig > p{
+    text-align: center;
+}
+fig > div{
     margin: 0 auto 0 auto;
-    background: #fff;
-    overflow-x: auto;
+    text-align: center;
 }
 fig > div > img{
-    width: 100%;
-    text-align: center;
+}
+fig[fs] > div{
+}
+fig[fs] > div > img{
 }
