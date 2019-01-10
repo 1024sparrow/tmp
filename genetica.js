@@ -11,6 +11,7 @@ class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
         this._generateFirstPopulation(s);
         this._adjacencyMatrix(s);
         this._automaticCalc(s);
+        this._manualCalc(s);
     }
 
     _applyParams(s){
@@ -133,6 +134,25 @@ class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
             this.ge.setCurGeneration(0);
             this.ge.setIndividualsList(s.firstGeneration);
             s.curGenerationForOutput = '' + this.ge.getCurGeneration();
+            this._registerStateChanges();
+        }
+    }
+
+    _manualCalc(s){
+        if (s.bn_4_selection){
+            s.bn_4_selection = false;
+            this._registerStateChanges();
+        }
+        if (s.bn_4_crossing){
+            s.bn_4_crossing = false;
+            this._registerStateChanges();
+        }
+        if (s.bn_4_mutation){
+            s.bn_4_mutation = false;
+            this._registerStateChanges();
+        }
+        if (s.bn_4_reduction){
+            s.bn_4_reduction = false;
             this._registerStateChanges();
         }
     }

@@ -163,12 +163,37 @@ var layouts = {
                             { widget:{ type: 'stack', items:[] }}
                         ]
                     },
-                    {
+                    { // Содержимое пятой вкладки (Пошаговое вычисление)
                         id: 'tab4',
                         type: 'strip',
                         bg: 'rgba(255,255,255,0.2)',
-                        orient: 'v',
-                        items: []
+                        orient: 'h',
+                        items: [
+                            { widget:{ type: 'stack', items:[] }},
+                            {
+                                widget:{
+                                    type: 'strip',
+                                    orient: 'v',
+                                    items: [
+                                        {
+                                            widget:{
+                                                type: 'strip',
+                                                orient: 'h',
+                                                items: [
+                                                    'bn_4_selection',
+                                                    'bn_4_crossing',
+                                                    'bn_4_mutation',
+                                                    'bn_4_reduction'
+                                                ]
+                                            },
+                                            size: '48px'
+                                        },
+                                    ]
+                                },
+                                size: '800px'
+                            },
+                            { widget:{ type: 'stack', items:[] }}
+                        ]
                     },
                 ]
             }

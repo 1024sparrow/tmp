@@ -64,5 +64,9 @@ var initState = {
     par_3_1_1: '1',
     //bn_3_1: undefined,
     bn_3_2: true,
-    curGenerationForOutput: '<не доступно>'
+    curGenerationForOutput: '<не доступно>',
+    //bn_4_selection: undefined,
+    //bn_4_crossing: undefined,
+    //bn_4_mutation: undefined,
+    //bn_4_reduction: undefined
 };

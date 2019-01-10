@@ -152,5 +152,33 @@ var widgets = {
             title: 'Сбросить',
             activeVarName: 'bn_3_2'
         }
+    },
+    bn_4_selection:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'Селекция [0]',
+            activeVarName: 'bn_4_selection'
+        }
+    },
+    bn_4_crossing:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'Скрещивание [0]',
+            activeVarName: 'bn_4_crossing'
+        }
+    },
+    bn_4_mutation:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'Мутация [0]',
+            activeVarName: 'bn_4_mutation'
+        }
+    },
+    bn_4_reduction:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'Редукция [0]',
+            activeVarName: 'bn_4_reduction'
+        }
     }
 };
