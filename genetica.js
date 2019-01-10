@@ -1,3 +1,5 @@
+'use strict';
+
 class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
     constructor() {
         super(); // вызов конструктора родительского класса
@@ -84,12 +86,53 @@ class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
     }
 
     _automaticCalc(s){
-        if (s.bn_3_1){ // нажата кнопка "Генерировать далее"
+        console.log('55555555555555:', s.bn_3_1);
+        let i, arr;
+        if (s.bn_3_1 === undefined){
+            console.log('1');
             s.bn_3_1 = false;
+            s.curGenerationForOutput = '' + this.ge.getCurGeneration();
+            console.log('set current generation for output: ', s.curGenerationForOutput);
+            this._registerStateChanges();
+        }
+        else if (s.bn_3_1){ // нажата кнопка "Генерировать далее"
+            console.log('2');
+            s.bn_3_1 = false;
+
+            for (i = 0 ; i < (parseInt(s.par_3_1_1) - 1) ; i++) {
+                this.ge.processOneCycle();
+            }
+            arr = this.ge.processOneCycle();
+
+                /*for (int i = 0; i < Integer.parseInt(cyclesCount.getValue()) - 1; i++) {
+                    gaui.getGeneticEngine().processOneCycle();
+                }
+
+                ArrayList<Chromosomal> arr = gaui.getGeneticEngine().processOneCycle();
+
+                //for (int i = 0; i < arr.size(); i++) {
+                    //individualsGrid.getGrid().setWidget(i, arr.get(i).getGens().size(), new Label(Double.toString(arr.get(i).getFFValue())));
+                //}
+
+                individualsGrid.setArr(arr);*/
+
+            s.curGenerationForOutput = '' + this.ge.getCurGeneration();
             this._registerStateChanges();
         }
         if (s.bn_3_2){ // нажата кнопка "Сбросить"
+            console.log('3');
             s.bn_3_2 = false;
+
+            /*gaui.getGeneticEngine().setCurGeneration(0);
+            gaui.getGeneticEngine().setIndividualsList(gaui.firstGeneration.getFirstGeneration());
+
+            individualsGrid.setArr(gaui.getGeneticEngine().getIndividualsList());
+
+            ((Label) grid.getWidget(1, 0)).setText("Текущая генерация: " + gaui.getGeneticEngine().getCurGeneration() + ". ");*/
+
+            this.ge.setCurGeneration(0);
+            this.ge.setIndividualsList(s.firstGeneration);
+            s.curGenerationForOutput = '' + this.ge.getCurGeneration();
             this._registerStateChanges();
         }
     }
@@ -404,8 +447,8 @@ class SimpleChrormosome extends Chromosomal {
         let path = 0,
             comp1, comp2, i;
         for (i = 1; i < this.gens.length; i++) {
-            comp1 = gens[i - 1];
-            comp2 = gens[i];
+            comp1 = this.gens[i - 1];
+            comp2 = this.gens[i];
             path += this.aadjacencyMatrix[comp1][comp2];
         }
         return path;

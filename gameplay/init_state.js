@@ -62,6 +62,7 @@ var initState = {
         //matrix: [ [..], [..] ]
     },
     par_3_1_1: '1',
-    bn_3_1: false,
+    //bn_3_1: undefined,
+    bn_3_2: true,
     curGenerationForOutput: '<не доступно>'
 };
