@@ -8,6 +8,7 @@ class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
         this._applyParams(s);
         this._generateFirstPopulation(s);
         this._adjacencyMatrix(s);
+        this._automaticCalc(s);
     }
 
     _applyParams(s){
@@ -78,6 +79,17 @@ class GeneticEngineSubscriber extends Traliva.LogicsStateSubscriber {
             }
             htmlTable += '</table>';
             s.firstGenerationHtml = htmlTable;
+            this._registerStateChanges();
+        }
+    }
+
+    _automaticCalc(s){
+        if (s.bn_3_1){ // нажата кнопка "Генерировать далее"
+            s.bn_3_1 = false;
+            this._registerStateChanges();
+        }
+        if (s.bn_3_2){ // нажата кнопка "Сбросить"
+            s.bn_3_2 = false;
             this._registerStateChanges();
         }
     }

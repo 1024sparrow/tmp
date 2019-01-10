@@ -60,5 +60,8 @@ var initState = {
         breaksCount: '3',
         jointsCount: '3'
         //matrix: [ [..], [..] ]
-    }
+    },
+    par_3_1_1: '1',
+    bn_3_1: false,
+    curGenerationForOutput: '<не доступно>'
 };

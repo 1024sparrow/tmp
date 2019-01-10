@@ -107,5 +107,50 @@ var widgets = {
         options:{
             textVarName: 'par_1_1'
         }
+    },
+    title_3_1_1:{
+        constructor: TralivaKit.Label,
+        options:{
+            text: 'Выполнить сразу'
+        }
+    },
+    title_3_1_2:{
+        constructor: TralivaKit.Label,
+        options:{
+            text: 'цикл(ов).'
+        }
+    },
+    item_3_1_1:{
+        constructor: TralivaKit.LineEdit,
+        options:{
+            textVarName: 'par_3_1_1'
+        }
+    },
+    button_3_1:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'генерировать далее',
+            activeVarName: 'bn_3_1'
+        }
+    },
+    title_3_2:{
+        constructor: TralivaKit.Label,
+        options:{
+            text: 'Текущая генерация:'
+        }
+    },
+    item_3_2:{
+        constructor: TralivaKit.Label,
+        options:{
+            color: '#800',
+            textVarName: 'curGenerationForOutput'
+        }
+    },
+    button_3_3:{
+        constructor: TralivaKit.Button,
+        options:{
+            title: 'Сбросить',
+            activeVarName: 'bn_3_2'
+        }
     }
 };

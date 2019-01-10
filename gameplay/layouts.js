@@ -109,7 +109,7 @@ var layouts = {
                                         }
                                     ]
                                 },
-                                size: '600px'
+                                size: '800px'
                             },
                             { widget:{ type: 'stack', items:[] }},
                             //'right_1'
@@ -122,12 +122,46 @@ var layouts = {
                         orient: 'v',
                         items: []
                     },
-                    {
+                    {// Содержимое четвёртой вкладки (Автоматическое вычисление)
                         id: 'tab3',
                         type: 'strip',
                         bg: 'rgba(255,255,255,0.2)',
-                        orient: 'v',
-                        items: []
+                        orient: 'h',
+                        items: [
+                            { widget:{ type: 'stack', items:[] }},
+                            {
+                                widget:{
+                                    type: 'strip',
+                                    orient: 'v',
+                                    items: [
+                                        {
+                                            widget:{
+                                                type: 'strip',
+                                                orient: 'h',
+                                                items: [
+                                                    'title_3_1_1', 'item_3_1_1', 'title_3_1_2', 'button_3_1'
+                                                ]
+                                            },
+                                            size: '48px'
+                                        },
+                                        {
+                                            widget: 'title_3_2',
+                                            size: '48px'
+                                        },
+                                        {
+                                            widget: 'item_3_2',
+                                            size: '48px'
+                                        },
+                                        {
+                                            widget: 'button_3_3',
+                                            size: '48px'
+                                        },
+                                    ]
+                                },
+                                size: '800px'
+                            },
+                            { widget:{ type: 'stack', items:[] }}
+                        ]
                     },
                     {
                         id: 'tab4',
