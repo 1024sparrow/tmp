@@ -1,0 +1,17 @@
+:split <filename>
+:vsplit <filename>
+CTRL_D & <TAB>
+CTRL_Z & fg
+
+MARKS:
+mark is a position in file
+alias may be:
+- lowercase - temporary in file editing session
+- uppercase - attached with filename
+- numeric (single digit) - 
+
+mq - add mark with alias 'q'
+'q - move to mark with alias 'q'
+g'q - jump to mark with alias 'q'
+:marks - show all mark list
+:delm q - remove mark with alias 'q'
