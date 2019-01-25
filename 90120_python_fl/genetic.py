@@ -49,20 +49,18 @@ class Genetic:
         print('скрещивание')
         # Скрещивание у нас будет по одной точке - по одной случайной точке
         # Сначала случайным образом поделим каждую хромосому на две части, а затем для каждой головы случайным образом подберём такой хвост, чтобы в хвосте ни один узел не был задействован в голове
-        heads = [] # Оторванные по случайному индексу головы хромосом. Храним кортежи (first, second) из 1.самого фрагмента хромосомы и 2.множества задействованных узлов
-        tails = [] # Оторванные по случайному индексу хвосты хромосом. Храним сами фрагменты хромосом
+        heads = [] # Оторванные по случайному индексу головы хромосом.
+        tails = [] # Оторванные по случайному индексу хвосты хромосом.
         children = []
         #print(this.population)
         for chr in this.population:
             if len(chr) == 2:
-                heads.append(([], set()))
+                heads.append([])
                 tails.append([])
             else:
                 index = (rand() % (len(chr) - 2)) + 1
-                tmp = chr[1:index]
-                heads.append((tmp, set(tmp)))
-                tmp = chr[index:len(chr) - 1]
-                tails.append(tmp)
+                heads.append(chr[1:index])
+                tails.append(chr[index:len(chr) - 1])
 
         #print('heads:')
         #print('======')
@@ -73,6 +71,7 @@ class Genetic:
 
         while heads:
             head = heads.pop() # извлекаем последний элемент из списка голов. Это кортеж из списка и множества.
+            head_set = set(head)
             tmp = tails.copy()
             ok = False
             while tmp and not ok:
@@ -80,14 +79,14 @@ class Genetic:
                 tail = tmp[index]
                 ok = True
                 for i in tail:
-                    if i in head[1]: # Если в хвосте попался индекс узла, который есть в голове, то такой хвост нам не подходит
+                    if i in head_set: # Если в хвосте попался индекс узла, который есть в голове, то такой хвост нам не подходит
                         ok = False
                         tmp = tmp[:index] + tmp[index + 1:] # из массива хвостов-кандидатов убрали этого неудачника
                         break
                 if ok: # склеиваем голову и хвост, добавляем в список детей, убираем этот хвост и эту голову из дальнейшего рассмотрения - они больше не будут участвовать в скрещивании
-                    children.append([this.sett['direction']['from']] + head[0] + tail + [this.sett['direction']['to']])
+                    children.append([this.sett['direction']['from']] + head + tail + [this.sett['direction']['to']])
                 #else:
-                #    print('для головы ', head[0], 'не нашлось подходящего хвоста')
+                #    print('для головы ', head, 'не нашлось подходящего хвоста')
         #print('children:')
         #print('=========')
         #print(children)
