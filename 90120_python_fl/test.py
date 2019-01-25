@@ -11,6 +11,7 @@ with open('settings.json') as json_data:
 engine = Genetic(settings)
 
 engine.generate_first_population()
+engine.cross()
 
 
 
