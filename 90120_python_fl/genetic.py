@@ -115,7 +115,7 @@ class Genetic:
             else:
                 index = (rand() % (len(chr) - 2)) + 1
                 heads.append(chr[1:index])
-                tails.append(chr[index:len(chr) - 1])
+                tails.append(chr[index:len(chr)])
 
         #print('heads:')
         #print('======')
