@@ -43,6 +43,29 @@ class Genetic:
         pass
 
     def mutate(this):
+        # при мутации мы не видоизменяем всех особей
+        # мы делаем копию всей популяции, всех в копии популяции мутируем, и затем эту копию добавляем в нашу популяцию. Таким образом, в результате такой мутации численность популяции должна удвоиться
+        mutated_copy = this.population.copy()
+        for chr in mutated_copy:
+            #chr_orig = chr.copy()
+            if len(chr) == this.count:
+                if_delete = True
+            elif len(chr) == 2:
+                if_delete = False
+            else:
+                if_delete = rand() % 2 == 0
+            if if_delete:
+                index = rand() % (len(chr) - 2) + 1
+                chr = chr[:index] + chr[index + 1:]
+            else:
+                index = rand() % (len(chr) - 1)
+                a = set(chr)
+                cand = rand() % this.count
+                while cand in a: # подбираем такой узел, какой ещё не был использован в особи
+                    cand = rand() % this.count
+                chr = chr[:index + 1] + [cand] + chr[index + 1:]
+            #print('%s\t-->\t%s' % (chr_orig, chr))
+            this.population.append(chr)
         pass
 
     def cross(this):
@@ -92,3 +115,7 @@ class Genetic:
         #print(children)
         this.population += children
         
+    def show_population(this):
+        print('Попляция состоит из %s особей' % len(this.population))
+        #for row in this.population:
+        #    print(row)
