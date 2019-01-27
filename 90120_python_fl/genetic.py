@@ -42,12 +42,23 @@ class Genetic:
     def chr_fitness(this, chr):
         # возвращает стоимость передачт сллбщения по указанному маршруту
         # особое значение: -1. Оно соответствует невозможности передачи пакета по этому маршруту (ввиду отсутствия связи между какой-то из задействованных пар узлов)
-        return len(chr)
+        adja = this.sett['adja_matrix']
+        ret_val = 0
+        prev_node = None
+        for node in chr:
+            if prev_node is not None:
+                tmp = adja[prev_node][node]
+                if tmp < 0:
+                    return -1
+                ret_val += tmp
+            prev_node = node
+        #print(ret_val)
+        return ret_val
+        #return len(chr)
 
     def selection(this):
         print('селекция')
         # сортируем нашу популяцию в порядке возрастания стоимости доставки пакета (в порядке возрастания fitness)
-        f = lambda chr: this.chr_fitness(chr)
         fitness = [(this.chr_fitness(i), i) for i in this.population] # по популяции получаем список пар (стоимость_доставки, сам_маршрут)
         fitness = sorted(fitness, key = lambda pair: pair[0]) # сортируем список пар в порядке возрастания стоимости доставки
         #print(fitness)
@@ -60,6 +71,7 @@ class Genetic:
             if count >= this.sett['first_pop_count']:
                 break # выходим из цикла
             this.population.append(pair[1])
+            print(pair)
             count += 1
 
     def mutate(this):
@@ -136,7 +148,7 @@ class Genetic:
         this.population += children
         
     def show_population(this, detailed = False):
-        print('Попляция состоит из %s особей' % len(this.population))
+        print('Популяция состоит из %s особей' % len(this.population))
         if detailed:
             for row in this.population:
                 print(row)
