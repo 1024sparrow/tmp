@@ -20,7 +20,7 @@ class Genetic:
             #[this.sett['direction']['from'], this.sett['direction']['to']]
         ]
         # особи в популяции могут быть и одинаковыми
-        for i1 in range(0, this.sett['first_pop_count'] - 1):
+        for i1 in range(0, this.sett['first_pop_count']):
             #print(i1)
             cand_len = rand() % (this.count - 2)
             #print('cand_len:', cand_len)
@@ -39,12 +39,33 @@ class Genetic:
             #print(chromosome)
         pass
 
+    def chr_fitness(this, chr):
+        # возвращает стоимость передачт сллбщения по указанному маршруту
+        # особое значение: -1. Оно соответствует невозможности передачи пакета по этому маршруту (ввиду отсутствия связи между какой-то из задействованных пар узлов)
+        return len(chr)
+
     def selection(this):
-        pass
+        print('селекция')
+        # сортируем нашу популяцию в порядке возрастания стоимости доставки пакета (в порядке возрастания fitness)
+        f = lambda chr: this.chr_fitness(chr)
+        fitness = [(this.chr_fitness(i), i) for i in this.population] # по популяции получаем список пар (стоимость_доставки, сам_маршрут)
+        fitness = sorted(fitness, key = lambda pair: pair[0]) # сортируем список пар в порядке возрастания стоимости доставки
+        #print(fitness)
+        this.population = []
+        count = 0
+        # первые 'first_pop_count' маршрутов записываем в this.population, откидывая при этом в принципе непроходимые маршруты (их стоимость доставки имеет значение -1)
+        for pair in fitness:
+            if pair[0] < 0:
+                continue # продолжаем цикл, пропустив текущую итерацию
+            if count >= this.sett['first_pop_count']:
+                break # выходим из цикла
+            this.population.append(pair[1])
+            count += 1
 
     def mutate(this):
         # при мутации мы не видоизменяем всех особей
         # мы делаем копию всей популяции, всех в копии популяции мутируем, и затем эту копию добавляем в нашу популяцию. Таким образом, в результате такой мутации численность популяции должна удвоиться
+        print('Мутация. Текущую популяцию дополняем мутированными копиями')
         mutated_copy = this.population.copy()
         for chr in mutated_copy:
             #chr_orig = chr.copy()
@@ -66,7 +87,6 @@ class Genetic:
                 chr = chr[:index + 1] + [cand] + chr[index + 1:]
             #print('%s\t-->\t%s' % (chr_orig, chr))
             this.population.append(chr)
-        pass
 
     def cross(this):
         print('скрещивание')
@@ -115,7 +135,8 @@ class Genetic:
         #print(children)
         this.population += children
         
-    def show_population(this):
+    def show_population(this, detailed = False):
         print('Попляция состоит из %s особей' % len(this.population))
-        #for row in this.population:
-        #    print(row)
+        if detailed:
+            for row in this.population:
+                print(row)

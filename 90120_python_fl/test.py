@@ -11,7 +11,15 @@ with open('settings.json') as json_data:
 engine = Genetic(settings)
 
 engine.generate_first_population()
+engine.show_population()
+
 engine.cross()
+engine.show_population()
+
+engine.mutate()
+
+engine.selection()
+engine.show_population(True)
 
 
 
