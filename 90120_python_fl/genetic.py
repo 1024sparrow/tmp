@@ -18,14 +18,35 @@ class Genetic:
         if len(this.population) == 0:
             this.generate_first_population()
         for i in range(0, p_n):
-            print('---- цикл %s ----' % i)
+            print('---- цикл %s ----' % (i + 1))
             this.cross()
-            this.show_population(True)
+            #this.show_population(True)
             this.selection()
             this.mutate()
             this.mutate()
-            this.show_population(True)
+            #this.show_population(True)
             this.selection()
+
+    def solve(this):
+        if len(this.population) == 0:
+            this.generate_first_population()
+        min_val = None
+        counter = 0
+        loop_counter = 0
+        while counter < 20:
+            print('---- цикл %s ----' % (loop_counter + 1))
+            this.cross()
+            this.selection()
+            this.mutate()
+            this.mutate()
+            tmp = this.selection()
+            if not min_val is None and tmp[0] < min_val:
+                counter = 0
+            else:
+                counter += 1
+            loop_counter += 1
+        print('Задача решена за %s циклов' % loop_counter)
+        print('Решение: %s' % tmp[1])
 
 
     def generate_first_population(this):
@@ -72,6 +93,7 @@ class Genetic:
 
     def selection(this):
         print('селекция')
+        ret_val = None
         # сортируем нашу популяцию в порядке возрастания стоимости доставки пакета (в порядке возрастания fitness)
         fitness = [(this.chr_fitness(i), i) for i in this.population] # по популяции получаем список пар (стоимость_доставки, сам_маршрут)
         fitness = sorted(fitness, key = lambda pair: pair[0]) # сортируем список пар в порядке возрастания стоимости доставки
@@ -85,8 +107,11 @@ class Genetic:
             if count >= this.sett['first_pop_count']:
                 break # выходим из цикла
             this.population.append(pair[1])
+            if ret_val is None or pair[0] < ret_val[0]:
+                ret_val = pair
             print(pair)
             count += 1
+        return ret_val
 
     def mutate(this):
         # при мутации мы не видоизменяем всех особей
@@ -121,15 +146,19 @@ class Genetic:
         heads = [] # Оторванные по случайному индексу головы хромосом.
         tails = [] # Оторванные по случайному индексу хвосты хромосом.
         children = []
+        existen = set()
+        for chr in this.population:
+            existen.add(str(chr))
         #print(this.population)
         for chr in this.population:
-            if len(chr) == 2:
-                heads.append([])
-                tails.append([])
-            else:
-                index = (rand() % (len(chr) - 2)) + 1
-                heads.append(chr[1:index])
-                tails.append(chr[index:len(chr) - 1])
+            while not str(chr) in existen:
+                if len(chr) == 2:
+                    heads.append([])
+                    tails.append([])
+                else:
+                    index = (rand() % (len(chr) - 2)) + 1
+                    heads.append(chr[1:index])
+                    tails.append(chr[index:len(chr) - 1])
 
         #print('heads:')
         #print('======')

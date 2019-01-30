@@ -4,22 +4,28 @@
 from genetic import Genetic
 import json
 
+source_file_name = 'settings.json'
+#source_file_name = 'settings_2.json'
 
-with open('settings.json') as json_data:
+with open(source_file_name) as json_data:
     settings = json.load(json_data)
     print(settings)
 engine = Genetic(settings)
 
 engine.generate_first_population()
-engine.show_population()
-
-engine.cross()
-engine.show_population()
-
-engine.mutate()
-
-engine.selection()
 engine.show_population(True)
+
+#engine.cross()
+#engine.show_population()
+
+#engine.mutate()
+
+#engine.selection()
+#engine.show_population(True)
+
+#engine.loop(15)
+
+engine.solve()
 
 
 
