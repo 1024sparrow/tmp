@@ -14,6 +14,20 @@ class Genetic:
         print('число узлов в сети:', this.count)
         this.population = []
 
+    def loop(this, p_n):
+        if len(this.population) == 0:
+            this.generate_first_population()
+        for i in range(0, p_n):
+            print('---- цикл %s ----' % i)
+            this.cross()
+            this.show_population(True)
+            this.selection()
+            this.mutate()
+            this.mutate()
+            this.show_population(True)
+            this.selection()
+
+
     def generate_first_population(this):
         print('генерирование первой популяции')
         this.population = [
@@ -115,7 +129,7 @@ class Genetic:
             else:
                 index = (rand() % (len(chr) - 2)) + 1
                 heads.append(chr[1:index])
-                tails.append(chr[index:len(chr)])
+                tails.append(chr[index:len(chr) - 1])
 
         #print('heads:')
         #print('======')
