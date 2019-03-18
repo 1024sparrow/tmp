@@ -64,7 +64,13 @@ MainWindow::MainWindow()
     connect(process, SIGNAL(readyReadStandardError()), this, SLOT(onDebug()));
 
     //process->start(PYTHON_PATH, QStringList() << "test.py");
-    process->start(PYTHON_PATH, QStringList() << "-i");
+    process->start(PYTHON_PATH, QStringList() << "-i"); // Ключ "-i" - интерактивный режим.
+        //Т.е. мы не за раз питоновский код пишем, а писнули-читаем, писнули-читаем.
+        // Так мы можем вручную запускать отдельные методы класса Genetic
+    process->waitForStarted();
+    process->write("from genetic import Genetic\n"); // пишем в Python
+    process->write("import json\n");
+    process->write("source_file_name = 'settings.json'\n");
 
     wAdja = new StepAdjancencyMatrixWidget(&commonData, this);
     connect(wAdja, SIGNAL(finished()), this, SLOT(onAdjaFinished()));
@@ -78,9 +84,11 @@ MainWindow::MainWindow()
     addTab(wManual, QString::fromUtf8("3. вручную"));
 }
 
-void MainWindow::closeEvent(QCloseEvent *)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
-    process->close();
+    //process->close();
+    process->write("quit()\n");
+    process->closeWriteChannel();
 }
 
 void MainWindow::onDebug()
@@ -128,13 +136,19 @@ void MainWindow::onAdjaFinished()
 
 void MainWindow::execCommand(const QString &command)
 {
+    processCurrentCommand = command;
+    qDebug() << "Поступила команда " << command;
     if (command == "init")
     {
-        process->write("from genetic import Genetic\n");
-        process->write("import json\n");
-        process->write("source_file_name = 'settings.json'\n");
+        // TODO: записываем все наши настройки в settings.json: сейчас он будет считан python-ом
+        // ...
+
         process->write("with open(source_file_name) as json_data:\n");
         process->write("    settings = json.load(json_data)\n\n");
         process->write("engine = Genetic(settings)\n");
+    }
+    else if (command == "gen_first_population")
+    {
+        process->write("engine.generate_first_population()\n");
     }
 }

@@ -13,6 +13,8 @@ signals:
     void execCommand(const QString &);
 public slots:
     void update();
+private slots:
+    void onBnGenerateFirstPopulationClicked();
 private:
     CommonData *commonData;
 };

@@ -14,7 +14,7 @@ class MainWindow : public QTabWidget
 public:
     MainWindow();
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 private slots:
     void onDebug();
     void onReadyRead();
@@ -24,6 +24,7 @@ private slots:
     void onAdjaFinished();
     void execCommand(const QString &);
 private:
+    QString processCurrentCommand; // меняется в слоте execCommand
     QProcess *process; // процесс с python-ом
     StepAdjancencyMatrixWidget *wAdja;
     StepManual *wManual;
