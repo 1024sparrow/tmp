@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTextStream>
+#include <QRegExp>
 #include <QDebug>//
 
 #define PYTHON_PATH "/usr/bin/python3"
@@ -79,9 +80,9 @@ MainWindow::MainWindow()
     wManual = new StepManual(&commonData, this);
     connect(wManual, SIGNAL(execCommand(QString)), this, SLOT(execCommand(QString)));
 
-    addTab(wStepParams, QString::fromUtf8("1. параметры"));
-    addTab(wAdja, QString::fromUtf8("2. adja"));
-    addTab(wManual, QString::fromUtf8("3. вручную"));
+    addTab(wStepParams, QString::fromUtf8("1. Параметры"));
+    addTab(wAdja, QString::fromUtf8("2. Матрица смежности"));
+    addTab(wManual, QString::fromUtf8("3. Вручную"));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -101,9 +102,26 @@ void MainWindow::onReadyRead()
     QTextStream ts(&ba);
     ts.setCodec(PYTHON_ENCODING);
     QString text;
+    int isScaningPopulation = 0;
+    QString populationText;
     while (ts.readLineInto(&text))
     {
         qDebug() << text;
+        if (isScaningPopulation > 0)
+        {
+            populationText.append(text);
+            if (--isScaningPopulation)
+                populationText.append("\n");
+            else
+                wManual->updatePopulationData(populationText);
+        }
+        else {
+            QRegExp re(QString::fromUtf8("Популяция состоит из (\\d+) особей"));
+            if (re.indexIn(text) >= 0)
+            {
+                isScaningPopulation = re.cap(1).toInt();
+            }
+        }
     }
 }
 
@@ -150,5 +168,6 @@ void MainWindow::execCommand(const QString &command)
     else if (command == "gen_first_population")
     {
         process->write("engine.generate_first_population()\n");
+        process->write("engine.show_population(True)\n");
     }
 }

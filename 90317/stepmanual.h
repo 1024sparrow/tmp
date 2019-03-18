@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "commondata.h"
 
+class QLabel;
 class StepManual : public QWidget
 {
     Q_OBJECT
@@ -12,11 +13,13 @@ public:
 signals:
     void execCommand(const QString &);
 public slots:
-    void update();
+    void update(); // изменились общие настройки: надо перезапустить движок (пересоздать экземпляр Genetic)
+    void updatePopulationData(const QString &p); // Обновить отображение популяции
 private slots:
     void onBnGenerateFirstPopulationClicked();
 private:
     CommonData *commonData;
+    QLabel *wPopulation;
 };
 
 #endif // STEPMANUAL_H
