@@ -7,11 +7,13 @@ SOURCES += \
     mainwindow.cpp \
     stepadjancencymatrixwidget.cpp \
     stepadjencymatrixtablemodel.cpp \
-    stepparams.cpp
+    stepparams.cpp \
+    stepmanual.cpp
 
 HEADERS += \
     mainwindow.h \
     stepadjancencymatrixwidget.h \
     stepadjencymatrixtablemodel.h \
     stepparams.h \
-    commondata.h
+    commondata.h \
+    stepmanual.h

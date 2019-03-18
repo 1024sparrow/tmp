@@ -49,5 +49,7 @@ Qt::ItemFlags StepAdjencyMatrixTableModel::flags(const QModelIndex &index) const
 
 void StepAdjencyMatrixTableModel::update()
 {
-    //
+    beginResetModel(); // обновляем всё
+    emit dataChanged(QModelIndex(), QModelIndex());
+    endResetModel();
 }

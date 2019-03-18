@@ -41,6 +41,10 @@ void StepParams::onBnApplyClicked()
         countChanged = true;
         delete[] commonData->adjaMatrix;
         commonData->adjaMatrix = new double[count * count];
+        for (int i = 0, c = count * count ; i < c ; ++i)
+        {
+            commonData->adjaMatrix[i] = 0;
+        }
     }
     commonData->count = count;
     commonData->startPoint = leStartPoint->text().toInt();
