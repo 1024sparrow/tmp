@@ -9,11 +9,14 @@ StepManual::StepManual(CommonData *commonData, QWidget *parent)
 {
     QPushButton *bnGenerateFirstPopulation = new QPushButton(QString::fromUtf8("Генерировать первую популяцию"), this);
     connect(bnGenerateFirstPopulation, SIGNAL(pressed()), this, SLOT(onBnGenerateFirstPopulationClicked()));
+    QPushButton *bnAutoSolve = new QPushButton(QString::fromUtf8("Автоматически решить задачу"), this);
+    connect(bnAutoSolve, SIGNAL(pressed()), this, SLOT(onBnAutoClicked()));
 
     QWidget *wControls = new QWidget(this);
     {
         QBoxLayout *lay = new QVBoxLayout(wControls);
         lay->addWidget(bnGenerateFirstPopulation);
+        lay->addWidget(bnAutoSolve);
         lay->addStretch();
     }
 
@@ -38,4 +41,9 @@ void StepManual::updatePopulationData(const QString &p)
 void StepManual::onBnGenerateFirstPopulationClicked()
 {
     emit execCommand("gen_first_population");
+}
+
+void StepManual::onBnAutoClicked()
+{
+    emit execCommand("solve");
 }

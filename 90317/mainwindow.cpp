@@ -103,17 +103,26 @@ void MainWindow::onReadyRead()
     ts.setCodec(PYTHON_ENCODING);
     QString text;
     int isScaningPopulation = 0;
-    QString populationText;
+    QString populationText, solution;
     while (ts.readLineInto(&text))
     {
         qDebug() << text;
+        if (text.contains("Решение:"))
+            solution = text;
         if (isScaningPopulation > 0)
         {
             populationText.append(text);
             if (--isScaningPopulation)
                 populationText.append("\n");
             else
+            {
+                if (!solution.isEmpty())
+                {
+                    populationText.append("\n\n");
+                    populationText.append(solution);
+                }
                 wManual->updatePopulationData(populationText);
+            }
         }
         else {
             QRegExp re(QString::fromUtf8("Популяция состоит из (\\d+) особей"));
@@ -158,8 +167,38 @@ void MainWindow::execCommand(const QString &command)
     qDebug() << "Поступила команда " << command;
     if (command == "init")
     {
-        // TODO: записываем все наши настройки в settings.json: сейчас он будет считан python-ом
-        // ...
+        // записываем все наши настройки в settings.json: сейчас он будет считан python-ом
+        QJsonObject jsonRoot;
+        jsonRoot.insert("count", commonData.count);
+        QJsonObject jsonDirection;
+        jsonDirection.insert("from", commonData.startPoint);
+        jsonDirection.insert("to", commonData.endPoint);
+        jsonRoot.insert("direction", jsonDirection);
+        QJsonArray jsonAdja;
+        for (int row = 0 ; row < commonData.count ; ++row)
+        {
+            QJsonArray jsonAdjaRow;
+            for (int i = 0 ; i < commonData.count ; ++i)
+            {
+                jsonAdjaRow.append(commonData.adjaMatrix[i * commonData.count + row]);
+            }
+            jsonAdja.append(jsonAdjaRow);
+        }
+        jsonRoot.insert("adja_matrix", jsonAdja);
+        jsonRoot.insert("first_pop_count", commonData.firstPopulationCount);
+
+        QJsonDocument doc;
+        doc.setObject(jsonRoot);
+        QByteArray baJson = doc.toJson();
+        QFile fileSettings(CORE_DIR_PATH "settings.json");
+        if (fileSettings.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            fileSettings.write(baJson);
+        }
+        else
+        {
+            QMessageBox::warning(this, "", QString::fromUtf8("Ошибка записи в файл"));
+        }
 
         process->write("with open(source_file_name) as json_data:\n");
         process->write("    settings = json.load(json_data)\n\n");
@@ -169,5 +208,9 @@ void MainWindow::execCommand(const QString &command)
     {
         process->write("engine.generate_first_population()\n");
         process->write("engine.show_population(True)\n");
+    }
+    else if (command == "solve")
+    {
+        process->write("engine.solve()\nengine.show_population(True)\n");
     }
 }

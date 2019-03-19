@@ -17,6 +17,7 @@ public slots:
     void updatePopulationData(const QString &p); // Обновить отображение популяции
 private slots:
     void onBnGenerateFirstPopulationClicked();
+    void onBnAutoClicked();
 private:
     CommonData *commonData;
     QLabel *wPopulation;
