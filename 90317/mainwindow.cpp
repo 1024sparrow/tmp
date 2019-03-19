@@ -206,11 +206,24 @@ void MainWindow::execCommand(const QString &command)
     }
     else if (command == "gen_first_population")
     {
-        process->write("engine.generate_first_population()\n");
-        process->write("engine.show_population(True)\n");
+        process->write("engine.generate_first_population()\nengine.show_population(True)\n");
+        //process->write("engine.show_population(True)\n");
     }
     else if (command == "solve")
     {
         process->write("engine.solve()\nengine.show_population(True)\n");
+    }
+    else if (command == "cross")
+    {
+        process->write("engine.cross()\nengine.show_population(True)\n");
+        //process->write("engine.show_population(True)\n");
+    }
+    else if (command == "mutate")
+    {
+        process->write("engine.mutate()\nengine.show_population(True)\n");
+    }
+    else if (command == "selection")
+    {
+        process->write("engine.selection()\nengine.show_population(True)\n");
     }
 }

@@ -18,6 +18,9 @@ public slots:
 private slots:
     void onBnGenerateFirstPopulationClicked();
     void onBnAutoClicked();
+    void onBnCrossClicked();
+    void onBnMutateClicked();
+    void onBnSelectionClicked();
 private:
     CommonData *commonData;
     QLabel *wPopulation;
