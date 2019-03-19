@@ -15,8 +15,8 @@ engine = Genetic(settings)
 engine.generate_first_population()
 engine.show_population(True)
 
-#engine.cross()
-#engine.show_population()
+engine.cross()
+engine.show_population()
 
 #engine.mutate()
 
@@ -25,7 +25,7 @@ engine.show_population(True)
 
 #engine.loop(15)
 
-engine.solve()
+#engine.solve()
 
 
 

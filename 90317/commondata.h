@@ -8,6 +8,7 @@ struct CommonData
     int startPoint;
     int endPoint;
     int firstPopulationCount;
+    int crossPoint; // точка скрещивания
 };
 
 #endif // COMMONDATA_H

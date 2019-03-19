@@ -53,6 +53,7 @@ MainWindow::MainWindow()
     commonData.startPoint = oDirection.value("from").toInt();
     commonData.endPoint = oDirection.value("to").toInt();
     commonData.firstPopulationCount = settObj.value("first_pop_count").toInt();
+    commonData.crossPoint = settObj.contains("cross_point") ? (commonData.count / 2) : settObj.value("cross_point").toInt();
 
     process = new QProcess(this);
     process->setWorkingDirectory(CORE_DIR_PATH);
@@ -170,6 +171,7 @@ void MainWindow::execCommand(const QString &command)
         // записываем все наши настройки в settings.json: сейчас он будет считан python-ом
         QJsonObject jsonRoot;
         jsonRoot.insert("count", commonData.count);
+        jsonRoot.insert("cross_point", commonData.crossPoint);
         QJsonObject jsonDirection;
         jsonDirection.insert("from", commonData.startPoint);
         jsonDirection.insert("to", commonData.endPoint);

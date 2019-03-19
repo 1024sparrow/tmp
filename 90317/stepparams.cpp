@@ -11,6 +11,7 @@ StepParams::StepParams(CommonData *commonData, QWidget *parent)
     leLength = new QLineEdit(this);
     leStartPoint = new QLineEdit(this);
     leEndPoint = new QLineEdit(this);
+    leCrossPoint = new QLineEdit(this);
     onBnRevertClicked();
 
     QPushButton *bnApply = new QPushButton(QString::fromUtf8("Применить"), this);
@@ -24,6 +25,7 @@ StepParams::StepParams(CommonData *commonData, QWidget *parent)
     lay->addRow(QString::fromUtf8("Длина последовательности"), leLength);
     lay->addRow(QString::fromUtf8("Индекс отправления"), leStartPoint);
     lay->addRow(QString::fromUtf8("Индекс назначения"), leEndPoint);
+    lay->addRow(QString::fromUtf8("Точка скрещивания"), leCrossPoint);
     mainLay->addWidget(content);
     mainLay->addStretch();
     mainLay->addWidget(bnApply);
@@ -49,6 +51,7 @@ void StepParams::onBnApplyClicked()
     commonData->count = count;
     commonData->startPoint = leStartPoint->text().toInt();
     commonData->endPoint = leEndPoint->text().toInt();
+    commonData->crossPoint = leCrossPoint->text().toInt();
     emit finished(countChanged);
 }
 
@@ -57,4 +60,5 @@ void StepParams::onBnRevertClicked()
     leLength->setText(QString::number(commonData->count));
     leStartPoint->setText(QString::number(commonData->startPoint));
     leEndPoint->setText(QString::number(commonData->endPoint));
+    leCrossPoint->setText(QString::number(commonData->crossPoint));
 }

@@ -1,7 +1,7 @@
 #include "stepmanual.h"
 #include <QBoxLayout>
 #include <QPushButton>
-#include <QLabel>
+#include <QTextBrowser>
 #include <QDebug>
 
 StepManual::StepManual(CommonData *commonData, QWidget *parent)
@@ -29,7 +29,7 @@ StepManual::StepManual(CommonData *commonData, QWidget *parent)
         lay->addStretch();
     }
 
-    wPopulation = new QLabel(this);
+    wPopulation = new QTextBrowser(this);
 
     QBoxLayout *lay = new QHBoxLayout(this);
     lay->addWidget(wControls);

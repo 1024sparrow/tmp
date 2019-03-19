@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "commondata.h"
 
-class QLabel;
+class QTextBrowser;
 class StepManual : public QWidget
 {
     Q_OBJECT
@@ -23,7 +23,7 @@ private slots:
     void onBnSelectionClicked();
 private:
     CommonData *commonData;
-    QLabel *wPopulation;
+    QTextBrowser *wPopulation;
 };
 
 #endif // STEPMANUAL_H

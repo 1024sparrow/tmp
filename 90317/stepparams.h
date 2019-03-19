@@ -19,7 +19,8 @@ private:
     CommonData *commonData;
     QLineEdit *leLength,
               *leStartPoint,
-              *leEndPoint;
+              *leEndPoint,
+              *leCrossPoint;
 };
 
 #endif // STEPPARAMS_H
